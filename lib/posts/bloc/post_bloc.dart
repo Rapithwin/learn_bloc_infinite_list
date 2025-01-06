@@ -40,18 +40,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       PostFetched event, Emitter<PostState> emit) async {
     if (state.hasReachedMax) return;
     try {
-      if (state.status == PostStatus.inital) {
-        // TODO
-      }
       final posts = await repository.getPosts(state.posts.length);
+
+      if (posts.isEmpty) {
+        return emit(state.copyWith(hasReachedMax: true));
+      }
+
       emit(
-        posts.isEmpty
-            ? state.copyWith(hasReachedMax: true)
-            : state.copyWith(
-                status: PostStatus.success,
-                posts: List.of(state.posts)..addAll(posts),
-                hasReachedMax: false,
-              ),
+        state.copyWith(
+          status: PostStatus.success,
+          posts: [...state.posts, ...posts],
+        ),
       );
     } catch (_) {
       emit(state.copyWith(status: PostStatus.failure));
