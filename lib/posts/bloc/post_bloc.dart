@@ -10,9 +10,18 @@ part 'post_state.dart';
 
 const throttleDuration = Duration(milliseconds: 100);
 
+/// `throttleDropable` ensures that events are throttled to one event every `duration` perdiod
+/// and any events that com ein while the handler is still processing are dropped.
+///
+/// This approach is beneficial when handling events that could overwhelm the system fi processed too frequently.
 EventTransformer<E> throttleDropable<E>(Duration duration) {
   return (events, mapper) {
-    return droppable<E>().call(events.throttle(duration), mapper);
+    return droppable<E>().call(
+      // events.throttle(duration): This limits how often events are processed. If multiple events are emitted in quick succession,
+      // only the first event within each duration window is processed. Other events within the duration window are ignored.
+      events.throttle(duration),
+      mapper,
+    );
   };
 }
 
