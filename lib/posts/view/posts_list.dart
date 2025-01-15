@@ -37,6 +37,35 @@ class _PostsListState extends State<PostsList> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return BlocBuilder<PostBloc, PostState>(
+      builder: (context, state) {
+        switch (state.status) {
+          case PostStatus.failure:
+            return const Center(
+              child: Text("Failed to fetch posts"),
+            );
+          case PostStatus.success:
+            if (state.posts.isEmpty) {
+              return const Center(
+                child: Text("No posts."),
+              );
+            }
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return index >= state.posts.length
+                    ? const CircularProgressIndicator()
+                    : Container();
+              },
+              itemCount: state.hasReachedMax
+                  ? state.posts.length
+                  : state.posts.length + 1,
+            );
+          case PostStatus.inital:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+        }
+      },
+    );
   }
 }
