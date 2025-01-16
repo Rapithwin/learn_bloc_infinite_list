@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_list/posts/bloc/post_bloc.dart';
+import 'package:infinite_list/posts/widgets/post_item_list.dart';
 
 class PostsList extends StatefulWidget {
   const PostsList({super.key});
@@ -47,16 +48,11 @@ class _PostsListState extends State<PostsList> {
             return ListView.builder(
               controller: _scrollController,
               itemBuilder: (context, index) {
-                return index <= state.posts.length
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          color: Colors.amber,
-                          height: 200,
-                          child: Text(index.toString()),
-                        ),
-                      )
-                    : const CircularProgressIndicator();
+                return index >= state.posts.length
+                    ? const CircularProgressIndicator()
+                    : PostItemList(
+                        post: state.posts[index],
+                      );
               },
               itemCount: state.hasReachedMax
                   ? state.posts.length
