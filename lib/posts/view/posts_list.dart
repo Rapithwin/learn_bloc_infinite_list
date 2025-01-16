@@ -14,14 +14,8 @@ class _PostsListState extends State<PostsList> {
 
   @override
   void initState() {
-    _scrollController.addListener(_onScroll);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+    _scrollController.addListener(_onScroll);
   }
 
   void _onScroll() {
@@ -51,10 +45,18 @@ class _PostsListState extends State<PostsList> {
               );
             }
             return ListView.builder(
+              controller: _scrollController,
               itemBuilder: (context, index) {
-                return index >= state.posts.length
-                    ? const CircularProgressIndicator()
-                    : Container();
+                return index <= state.posts.length
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          color: Colors.amber,
+                          height: 200,
+                          child: Text(index.toString()),
+                        ),
+                      )
+                    : const CircularProgressIndicator();
               },
               itemCount: state.hasReachedMax
                   ? state.posts.length
@@ -67,5 +69,11 @@ class _PostsListState extends State<PostsList> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 }

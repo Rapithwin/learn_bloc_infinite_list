@@ -37,7 +37,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<void> _onPostFetched(
-      PostFetched event, Emitter<PostState> emit) async {
+    PostFetched event,
+    Emitter<PostState> emit,
+  ) async {
     if (state.hasReachedMax) return;
     try {
       final posts = await repository.getPosts(state.posts.length);

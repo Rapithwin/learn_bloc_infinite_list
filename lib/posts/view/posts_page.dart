@@ -16,7 +16,7 @@ class PostsPage extends StatelessWidget {
         PostsRepository(postsApi: PostsApi(httpClient: http.Client()));
     return Scaffold(
       body: BlocProvider(
-        create: (_) => PostBloc(repo),
+        create: (_) => PostBloc(repo)..add(PostFetched()),
         child: const PostsList(),
       ),
     );
