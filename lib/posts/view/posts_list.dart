@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_list/posts/bloc/post_bloc.dart';
+import 'package:infinite_list/posts/widgets/bottom_loader.dart';
 import 'package:infinite_list/posts/widgets/post_item_list.dart';
 
 class PostsList extends StatefulWidget {
@@ -49,7 +50,7 @@ class _PostsListState extends State<PostsList> {
               controller: _scrollController,
               itemBuilder: (context, index) {
                 return index >= state.posts.length
-                    ? const CircularProgressIndicator()
+                    ? const BottomLoader()
                     : PostItemList(
                         post: state.posts[index],
                       );
