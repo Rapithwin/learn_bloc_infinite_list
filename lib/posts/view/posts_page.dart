@@ -15,6 +15,12 @@ class PostsPage extends StatelessWidget {
     PostsRepository repo =
         PostsRepository(postsApi: PostsApi(httpClient: http.Client()));
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text("Posts"),
+        ),
+        backgroundColor: ThemeData.light().primaryColorLight,
+      ),
       body: BlocProvider(
         create: (_) => PostBloc(repo)..add(PostFetched()),
         child: const PostsList(),
