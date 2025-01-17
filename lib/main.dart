@@ -5,5 +5,6 @@ import 'package:infinite_list/simple_bloc_observer.dart';
 
 void main() {
   Bloc.observer = SimpleBlocObserver();
+
   runApp(const App());
 }

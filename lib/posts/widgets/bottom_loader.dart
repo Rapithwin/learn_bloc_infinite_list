@@ -7,8 +7,8 @@ class BottomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: 30,
-        width: 30,
+        height: 40,
+        width: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: Colors.white,
