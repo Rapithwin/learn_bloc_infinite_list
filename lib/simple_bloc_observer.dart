@@ -2,6 +2,7 @@
 
 import 'package:bloc/bloc.dart';
 
+/// A Simple BlocObserver to access all the changes
 class SimpleBlocObserver extends BlocObserver {
   const SimpleBlocObserver();
 
